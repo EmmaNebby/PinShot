@@ -28,6 +28,14 @@ export const addAComment = async (req, res, next) => {
     if (!user) {
       return next(createHttpError(400, "User not found"));
     }
+    if (!user.isVerified) {
+      return next(
+        createHttpError(
+          401,
+          "Email not verified, please vertify to create a pin"
+        )
+      );
+    }
     const commentObj = {
       userId: user._id,
       pinId: pinId,

@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer"; //this is used to send mail
-import Mailgen from "mailgen"; //this is used to style nodemailer  
+import Mailgen from "mailgen"; //this is used to style nodemailer
 import env from "../utils/validateEnv.js";
 
 const sendEmail = async ({ from, to, subject, text, userName }) => {
@@ -35,11 +35,9 @@ const sendEmail = async ({ from, to, subject, text, userName }) => {
     });
 
     await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully");
     return { success: true, msg: "Email sent successfully" };
   } catch (error) {
     console.log(error);
-    console.log("Email not sent");
     return { success: false, msg: "Failed to send email" };
   }
 };
