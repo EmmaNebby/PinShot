@@ -1,8 +1,8 @@
 import InfiniteScroll from "react-infinite-scroll-component";
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
 import { ClipLoader } from "react-spinners";
 
-export default function ReactInifiteScroll({
+export default function ReactInfiniteScroll({
   dataLength,
   fetchData,
   hasMore,
@@ -30,9 +30,9 @@ export default function ReactInifiteScroll({
   );
 }
 
-ReactInifiteScroll.propTypes = {
-  children: PropTypes.node.isRequired,
-  dataLength: PropTypes.number,
-  fetchData: PropTypes.func,
-  hasMore: PropTypes.bool,
+ReactInfiniteScroll.propTypes = {
+  children: propTypes.node.isRequired,
+  dataLength: propTypes.number,
+  fetchData: propTypes.func,
+  hasMore: propTypes.bool,
 };

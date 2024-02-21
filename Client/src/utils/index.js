@@ -1,4 +1,4 @@
 import Spinner from "./Spinner";
-import ReactInifiteScroll from "./ReactInifiteScroll";
+import registerOptions from "./formValidate";
 
-export {Spinner, ReactInifiteScroll}
+export {Spinner, registerOptions}

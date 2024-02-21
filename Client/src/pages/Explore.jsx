@@ -3,7 +3,7 @@ import { useFetch, useTitle } from "@hooks";
 import { pinService } from "@services";
 import { PageLayout } from "@layouts";
 import { Spinner } from "@utils";
-import { ReactInifiteScroll, MasonryLayout, PinCard } from "@components";
+import { ReactInfiniteScroll, MasonryLayout, PinCard } from "@components";
 
 export default function Explore() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,7 +44,7 @@ export default function Explore() {
         <>
           {loading && <Spinner text="Fetching pins" />}
           {allPins?.length > 0 ? (
-            <ReactInifiteScroll
+            <ReactInfiniteScroll
               dataLength={allPins?.length}
               fetchData={fetchMoreData}
               hasMore={hasMore}
@@ -54,7 +54,7 @@ export default function Explore() {
                   <PinCard key={index} {...pin} />
                 ))}
               </MasonryLayout>
-            </ReactInifiteScroll>
+            </ReactInfiniteScroll>
           ) : (
             <p>No pin to show at the moment.</p>
           )}
