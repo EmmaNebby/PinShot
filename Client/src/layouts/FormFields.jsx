@@ -21,7 +21,7 @@ export default function FormFields({
     <FloatingLabel controlId={id} label={label} className={className}>
       <Form.Control
         type={showPassword ? "text" : type}
-        placeholder="{placeholder}"
+        placeholder={placeholder}
         name={name}
         size="lg"
         {...register(name, registerOptions)}

@@ -1,30 +1,54 @@
 import { useTitle, useAuthContext } from "@hooks";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { FormFields, FormUi } from "@layouts";
 import { registerOptions } from "@utils";
 import { userService } from "@services";
+import { toast } from "react-toastify";
 
 export default function Login() {
+  useTitle("Login to PINSHOT");
   const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate;
-
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm();
 
-  useTitle("Login to PINSHOT");
+  const { loggedInUser } = useAuthContext();
+
+  useEffect(() => {
+    if(loggedInUser) {
+      navigate("/explore")
+    }
+  }, [loggedInUser, navigate])
+
+  
 
   const togglePassword = () => {
     setShowPassword((prev) => !prev); //this prev can be any variable to switch between false and true on the showPassword api
   };
 
-  const onFormSubmit = async (data) => {
-    console.log(data);
+  const onFormSubmit = async ({ userName, password }) => {
+    sessionStorage.setItem("username", userName);
+    try {
+      const { status, data } = await userService.login(userName, password);
+      if (status === 200) {
+        localStorage.setItem("usertoken", JSON.stringify(data.access_token));
+        toast.success(data.msg);
+        window.location.replace("/explore");
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response && error.response.data && error.response.data.error) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error(error.response.data || "Something went wrong");
+      }
+    }
   };
 
   return (
@@ -34,19 +58,19 @@ export default function Login() {
       to="/signup"
       path="Sign up"
       btnText="Login"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onFormSubmit)}
       isSubmitting={isSubmitting}
     >
       <FormFields
         register={register}
-        errors={errors?.username}
-        registerOptions={registerOptions?.username}
+        errors={errors?.userName}
+        registerOptions={registerOptions?.userName}
         className="my-4 text-black"
         id="userName"
         label="UserName"
         name="userName"
         type="text"
-        placeholder="userName"
+        placeholder="UserName"
       />
 
       <FormFields
@@ -56,7 +80,7 @@ export default function Login() {
         className="my-1 text-black position-relative"
         id="password"
         label="Password"
-        name="Password"
+        name="password"
         type="password"
         placeholder="Password"
         showPassword={showPassword}

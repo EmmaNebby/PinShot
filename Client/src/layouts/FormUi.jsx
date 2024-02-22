@@ -27,13 +27,15 @@ export default function FormUi({
       >
         <div className="z-3">
           <div className="text-center mb-4">
-            <Image
-              src={
-                "https://res.cloudinary.com/ceenobi/image/upload/v1706179614/pintube/Frame_16_ecr4pq.svg"
-              }
-              alt="logo"
-              style={{ width: "130px", height: "fit-content" }}
-            />
+            <Link to="/">
+              <Image
+                src={
+                  "https://res.cloudinary.com/ceenobi/image/upload/v1706179614/pintube/Frame_16_ecr4pq.svg"
+                }
+                alt="logo"
+                style={{ width: "130px", height: "fit-content" }}
+              />
+            </Link>
           </div>
           <p className="mb-4 text-center text-uppercase fw-bold fs-4">
             {title}
@@ -45,7 +47,7 @@ export default function FormUi({
             className="w-100 border-0 p-2 my-2 text-white"
             style={{ backgroundColor: "var(--orangeLight)" }}
             size="lg"
-            text={isSubmitting ? <ClipLoader color="#ffffff"/> : btnText}
+            text={isSubmitting ? <ClipLoader color="#ffffff" /> : btnText}
             disabled={isSubmitting}
           />
           <div className="d-flex justify-content-between align-items-center">
@@ -68,5 +70,5 @@ FormUi.propTypes = {
   path: PropTypes.string,
   btnText: PropTypes.string,
   isSubmitting: PropTypes.bool,
-  onSubmit: PropTypes.string,
+  onSubmit: PropTypes.func,
 };
